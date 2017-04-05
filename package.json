@@ -1,0 +1,36 @@
+{
+  "name": "week7-pajes",
+  "version": "1.0.0",
+  "description": "A sick blog platform for Spanish people",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests/test.js | tap-spec",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pbywater/week7-PAJeS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pbywater/week7-PAJeS/issues"
+  },
+  "homepage": "https://github.com/pbywater/week7-PAJeS#readme",
+  "devDependencies": {
+    "codecov": "^2.1.0",
+    "env2": "^2.1.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
+    "istanbul": "^0.4.5"
+  },
+  "dependencies": {
+    "handlebars": "^4.0.6",
+    "hapi": "^16.1.1",
+    "hapi-auth-cookie": "^7.0.0",
+    "inert": "^4.2.0",
+    "pg": "^6.1.5",
+    "vision": "^4.1.1"
+  }
+}
