@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-    "test": "tape tests/test.js | tap-spec",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "test": "node tests/tests.js | tap-spec",
+    "coverage": "istanbul cover tests/tests.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,9 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.1.3",
     "eslint-plugin-import": "^2.2.0",
-    "istanbul": "^0.4.5"
+    "istanbul": "^0.4.5",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3"
   },
   "dependencies": {
     "handlebars": "^4.0.6",
