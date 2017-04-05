@@ -29,6 +29,18 @@ server.register([inert, vision], (err) => {
     handler: (request, reply) => {
       reply.view('index');
     },
+
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/{file*}',
+    handler: {
+      directory: {
+        path: './public',
+      },
+    },
+
   });
 });
 
