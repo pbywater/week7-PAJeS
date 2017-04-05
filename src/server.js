@@ -5,8 +5,8 @@ const handlebars = require('handlebars');
 
 const server = new hapi.Server();
 
-const port = process.env.PORT || 3005;
-const host = process.env.HOST || 'localhost';
+const port = +process.env.PORT || 3005;
+const host = process.env.HEROKU_URL || 'localhost';
 
 server.connection({
   port,
@@ -31,6 +31,7 @@ server.register([inert, vision], (err) => {
     handler: (request, reply) => {
       reply.view('index');
     },
+
   });
 
   server.route({
@@ -41,6 +42,7 @@ server.register([inert, vision], (err) => {
         path: './public',
       },
     },
+
   });
 });
 
