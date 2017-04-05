@@ -6,7 +6,7 @@ const handlebars = require('handlebars');
 const server = new hapi.Server();
 
 const port = process.env.PORT || 3005;
-const host = process.env.HOST || 'localhost';
+const host = process.env.HEROKU_URL || 'localhost';
 
 server.connection({
   port,
@@ -17,12 +17,12 @@ server.register([inert, vision], (err) => {
   if (err) throw err;
 
   server.views({
-    engines: {hbs: handlebars},
+    engines: { hbs: handlebars },
     path: 'views',
     layout: 'default',
     layoutPath: 'views/layout',
     partialsPath: 'views/partials',
-    helpersPath: 'views/helpers'
+    helpersPath: 'views/helpers',
   });
 
   server.route({
@@ -30,7 +30,7 @@ server.register([inert, vision], (err) => {
     path: '/',
     handler: (request, reply) => {
       reply.view('index');
-    }
+    },
   });
 });
 
