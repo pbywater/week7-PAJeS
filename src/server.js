@@ -17,12 +17,12 @@ server.register([inert, vision], (err) => {
   if (err) throw err;
 
   server.views({
-    engines: {hbs: handlebars},
+    engines: { hbs: handlebars },
     path: 'views',
     layout: 'default',
     layoutPath: 'views/layout',
     partialsPath: 'views/partials',
-    helpersPath: 'views/helpers'
+    helpersPath: 'views/helpers',
   });
 
   server.route({
@@ -30,7 +30,17 @@ server.register([inert, vision], (err) => {
     path: '/',
     handler: (request, reply) => {
       reply.view('index');
-    }
+    },
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/{file*}',
+    handler: {
+      directory: {
+        path: './public',
+      },
+    },
   });
 });
 
