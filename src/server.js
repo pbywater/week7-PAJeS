@@ -6,11 +6,9 @@ const handlebars = require('handlebars');
 const server = new hapi.Server();
 
 const port = +process.env.PORT || 3005;
-const host = process.env.HEROKU_URL || 'localhost';
 
 server.connection({
   port,
-  host,
 });
 
 server.register([inert, vision], (err) => {
