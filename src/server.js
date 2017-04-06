@@ -11,6 +11,8 @@ const server = new hapi.Server();
 
 const port = +process.env.PORT || 3005;
 
+const response = {};
+
 server.connection({
   port,
 });
@@ -37,7 +39,8 @@ server.register([inert, vision, CookieAuth], (err) => {
           reply.view('Sorry, We are currently experiencing server difficulties');
           return;
         }
-        reply.view('index', { res });
+        response.res = res;
+        reply.view('index', response);
       });
     },
   });
@@ -55,17 +58,16 @@ server.register([inert, vision, CookieAuth], (err) => {
     method: 'POST',
     path: '/logged-in',
     handler: (req, reply) => {
-      const username = req.payload.username;
-      const password = req.payload.password;
+      const { username, password } = req.payload;
       req.cookieAuth.set({ username });
       data.getUsers(username, password, (err, res) => {
         if (err) reply.view('Please enter valid logins');
         if (res.length) {
           data.getBlogPosts((err, res) => {
             if (err) reply.view('Sorry, We are currently experiencing server difficulties');
-            response = { res };
+            response.res = res;
             response.credentials = req.auth.credentials;
-            console.log(response);
+            console.log(response.credentials);
             reply.view('index', response);
           });
         } else {
