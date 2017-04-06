@@ -1,0 +1,10 @@
+<header class="header">
+  <form class="header__form">
+    <img class="header__logo" src="./assets/edit-tools.png" alt="pen and brush logo image">
+      <a href="/write-post" class="">Write posts</a>
+      <a href="my-posts" class="">My posts</a>
+  </form>
+  {{#if credentials.username}}
+    <p> Hello {{credentials.username}} </p>
+  {{/if}}
+</header>
