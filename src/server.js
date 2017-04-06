@@ -32,8 +32,11 @@ server.register([inert, vision, CookieAuth], (err) => {
     method: 'GET',
     path: '/',
     handler: (request, reply) => {
-      data.getBlogPosts((err, res) => {
-        if (err) reply.view('Sorry, We are currently experiencing server difficulties');
+      data.getBlogPosts((dbErr, res) => {
+        if (dbErr) {
+          reply.view('Sorry, We are currently experiencing server difficulties');
+          return;
+        }
         reply.view('index', { res });
       });
     },
