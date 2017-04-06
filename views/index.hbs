@@ -1,2 +1,9 @@
-{{>header}}
+{{#if credentials.username}}
+  {{>header_logged_in}}
+{{else}}
+  {{>header}}
+  {{#if message}}
+  <div class="error">{{message}}</div>
+  {{/if}}
+{{/if}}
 {{>articles}}

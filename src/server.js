@@ -26,6 +26,7 @@ server.register([inert, vision, CookieAuth, credentials], (err) => {
     helpersPath: 'views/helpers',
   });
 
+
   server.route(routes);
 
 
