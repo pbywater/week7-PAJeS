@@ -3,6 +3,8 @@ const vision = require('vision');
 const inert = require('inert');
 const handlebars = require('handlebars');
 const data = require('./database/getdata.js');
+const CookieAuth = require('hapi-auth-cookie');
+const credentials = require('hapi-context-credentials');
 const postData = require('./database/postdata.js');
 
 const server = new hapi.Server();
@@ -13,7 +15,7 @@ server.connection({
   port,
 });
 
-server.register([inert, vision], (err) => {
+server.register([inert, vision, CookieAuth], (err) => {
   if (err) throw err;
 
   server.views({
@@ -30,15 +32,14 @@ server.register([inert, vision], (err) => {
     method: 'GET',
     path: '/',
     handler: (request, reply) => {
-      data.getBlogPosts((dbError, res) => {
-        if (dbError) {
+      data.getBlogPosts((dbErr, res) => {
+        if (dbErr) {
           reply.view('Sorry, We are currently experiencing server difficulties');
           return;
         }
-        reply.view('index', { res: res });
+        reply.view('index', { res });
       });
     },
-
   });
 
 
@@ -48,6 +49,31 @@ server.register([inert, vision], (err) => {
     handler: {
       view: 'write-post',
     },
+  });
+
+  server.route({
+    method: 'POST',
+    path: '/logged-in',
+    handler: (req, reply) => {
+      const username = req.payload.username;
+      const password = req.payload.password;
+      req.cookieAuth.set({ username });
+      data.getUsers(username, password, (err, res) => {
+        if (err) reply.view('Please enter valid logins');
+        if (res.length) {
+          data.getBlogPosts((err, res) => {
+            if (err) reply.view('Sorry, We are currently experiencing server difficulties');
+            response = { res };
+            response.credentials = req.auth.credentials;
+            console.log(response);
+            reply.view('index', response);
+          });
+        } else {
+          // reply.view('invalid-login');
+        }
+      });
+    },
+
   });
 
   server.route({
@@ -68,6 +94,7 @@ server.register([inert, vision], (err) => {
       });
     },
   });
+
   // Static routes
   server.route({
     method: 'GET',
@@ -80,6 +107,19 @@ server.register([inert, vision], (err) => {
 
   });
 });
+
+// Authentication
+
+const options = {
+  password: 'datagangrulesokdatagangrulesokdatagangrulesok',
+  cookie: 'pajescookie',
+  isSecure: false,
+  ttl: 3 * 60 * 10000,
+};
+
+server.auth.strategy('base', 'cookie', 'optional', options);
+
+// Start server
 
 server.start((err) => {
   if (err) throw err;

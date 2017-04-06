@@ -5,8 +5,11 @@
       <input type="text" placeholder="Enter username" name="username" value="">
     </label>
     <label>Password:
-    <input type="password" placeholder="Enter password" name="username" value="">
+    <input type="password" placeholder="Enter password" name="password" value="">
   </label>
   <input class="button" type="submit"  value="submit">
     </form>
+    {{#if credentials.username}}
+      <p> Hello {{credentials.username}} </p>
+    {{/if}}
 </header>
