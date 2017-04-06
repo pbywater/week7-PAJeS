@@ -1,13 +1,14 @@
 <header class="header">
     <form class="header__form" action="/logged-in" method="post">
   <img class="header__logo" src="./assets/edit-tools.png" alt="pen and brush logo image">
-      <label>Username:
-      <input type="text" placeholder="Enter username" name="username" value="">
+      <label>Nombre de usuario:
+      <input type="text" placeholder="
+Introduzca su nombre de usuario" name="username" value="">
     </label>
-    <label>Password:
-    <input type="password" placeholder="Enter password" name="password" value="">
+    <label>contraseña:
+    <input type="password" placeholder="Ingresa tu contraseña" name="password" value="">
   </label>
-  <input class="button" type="submit"  value="submit">
+  <input class="button" type="submit"  value="enviar">
     </form>
     {{#if credentials.username}}
       <p> Hello {{credentials.username}} </p>
