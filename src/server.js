@@ -28,19 +28,15 @@ server.register([inert, vision, CookieAuth], (err) => {
 
  // Template routes
 
-  const getBlogs =
-    data.getBlogPosts((err, res) => {
-      if (err) reply.view('Sorry, We are currently experiencing server difficulties');
-      return { res };
-    });
-
 
   server.route({
     method: 'GET',
     path: '/',
     handler: (request, reply) => {
-      console.log(getBlogs);
-      reply.view('index', getBlogs);
+      data.getBlogPosts((err, res) => {
+        if (err) reply.view('Sorry, We are currently experiencing server difficulties');
+        reply.view('index', { res });
+      });
     },
   });
 
@@ -56,7 +52,7 @@ server.register([inert, vision, CookieAuth], (err) => {
 
   server.route({
     method: 'POST',
-    path: '/',
+    path: '/logged-in',
     handler: (req, reply) => {
       const username = req.payload.username;
       const password = req.payload.password;
@@ -64,9 +60,12 @@ server.register([inert, vision, CookieAuth], (err) => {
       data.getUsers(username, password, (err, res) => {
         if (err) reply.view('Please enter valid logins');
         if (res.length) {
-          console.log(req.auth.credentials);
-          reply.view('index', {
-            credentials: req.auth.credentials,
+          data.getBlogPosts((err, res) => {
+            if (err) reply.view('Sorry, We are currently experiencing server difficulties');
+            response = { res };
+            response.credentials = req.auth.credentials;
+            console.log(response);
+            reply.view('index', response);
           });
         } else {
           // reply.view('invalid-login');
