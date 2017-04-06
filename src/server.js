@@ -8,16 +8,15 @@ const credentials = require('hapi-context-credentials');
 const postData = require('./database/postdata.js');
 
 const server = new hapi.Server();
+let cache;
 
-const port = +process.env.PORT || 3005;
-
-const response = {};
+const port = process.env.PORT || 3005;
 
 server.connection({
   port,
 });
 
-server.register([inert, vision, CookieAuth], (err) => {
+server.register([inert, credentials, vision, CookieAuth], (err) => {
   if (err) throw err;
 
   server.views({
@@ -39,8 +38,8 @@ server.register([inert, vision, CookieAuth], (err) => {
           reply.view('Sorry, We are currently experiencing server difficulties');
           return;
         }
-        response.res = res;
-        reply.view('index', response);
+        cache = res;
+        reply.view('index', { res });
       });
     },
   });
@@ -58,20 +57,26 @@ server.register([inert, vision, CookieAuth], (err) => {
     method: 'POST',
     path: '/logged-in',
     handler: (req, reply) => {
+
       const { username, password } = req.payload;
       req.cookieAuth.set({ username });
       data.getUsers(username, password, (err, res) => {
-        if (err) reply.view('Please enter valid logins');
-        if (res.length) {
-          data.getBlogPosts((err, res) => {
-            if (err) reply.view('Sorry, We are currently experiencing server difficulties');
-            response.res = res;
-            response.credentials = req.auth.credentials;
-            console.log(response.credentials);
-            reply.view('index', response);
+        if (err) {
+          //TODO res: cache, can be passed in but makes the above function run since
+          //its our only means of validation
+          reply.view('index', { message: err.message });
+      }
+      else if (res.length) {
+          data.getBlogPosts((dbError, allTheBlogsPosts) => {
+
+            if (dbError) {
+              reply.view('Sorry, We are currently experiencing server difficulties');
+            }
+            console.log('credentials', JSON.stringify(credentials));
+            reply({ res: allTheBlogsPosts }).redirect('/');
+
           });
         } else {
-          // reply.view('invalid-login');
         }
       });
     },
@@ -84,7 +89,7 @@ server.register([inert, vision, CookieAuth], (err) => {
     handler: (request, reply) => {
       postData.insertIntoDatabase(request.payload, (dbError, res) => {
         if (dbError) {
-          // Figure out how to send message with redirect
+          //  TODO Figure out how to send message with redirect
           // return reply({
           //   message: 'Ayúdame, oh Dios mío, ¿por qué?'
           // }).redirect('write-post');
