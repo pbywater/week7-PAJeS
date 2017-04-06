@@ -15,3 +15,20 @@ To set up a database in Heroku
 - Run `node database/db_build.js` to create your database locally (or whatever command you use to create your database)
 - Connect directly to Heroku database using `heroku pg:psql`
 - To see if your tables are there, run `\dt`
+
+
+Testing your databases
+- You will have to make a config-test.env file
+- (add it to your git-ignore)
+- It should contain a dburl to your local database
+- In your db_connection.js amend your file with the following:
+```const environment = require('env2');
+    if(process.env.ENV === 'test'){
+      environment('./config-test.env')
+    } else{
+      environment('config.env')
+    }
+```
+- Inside your package.json, add a script called ```"test-database":"ENV=test node database/db_build.js"```
+- Create a database called ```test_database``` in your ```psql```
+- Your db_url will look like ```[name]:localhost:[port]/[name of database]
