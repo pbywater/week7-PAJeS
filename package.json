@@ -4,7 +4,6 @@
   "description": "A sick blog platform for Spanish people",
   "main": "index.js",
   "scripts": {
-
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "node tests/tests.js | tap-spec",
@@ -31,6 +30,7 @@
     "tape": "^4.6.3"
   },
   "dependencies": {
+    "env2": "^2.1.1",
     "handlebars": "^4.0.6",
     "hapi": "^16.1.1",
     "hapi-auth-cookie": "^7.0.0",
