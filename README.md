@@ -22,3 +22,13 @@ We're aiming to create a simple blog application that allows users to log in, wr
 - [ ] Hashing passwords
 - [ ] Following user
 - [ ] Allowing user to add images
+
+## Installation instructions
+
+- Clone this repo
+- Run `npm install`
+- Add config.env and config-test.env files (ask us for the passwords!)
+- Run `npm run dev` to run server locally
+- To test - `npm run test`
+- To test database - `npm run test-database`
+- For coverage - `npm run coverage`
