@@ -24,6 +24,7 @@ server.register([inert, vision], (err) => {
     helpersPath: 'views/helpers',
   });
 
+ // Template routes
   server.route({
     method: 'GET',
     path: '/',
@@ -37,6 +38,16 @@ server.register([inert, vision], (err) => {
   });
 
 
+  server.route({
+    method: 'GET',
+    path: '/write-post',
+    handler: (request, reply) => {
+      reply.view('write-post');
+    },
+
+  });
+
+  // Static routes
   server.route({
     method: 'GET',
     path: '/{file*}',
