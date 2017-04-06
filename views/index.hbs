@@ -1,2 +1,6 @@
-{{>header}}
+{{#if credentials.username}}
+  {{>header_logged_in}}
+{{else}}
+  {{>header}}
+{{/if}}
 {{>articles}}
