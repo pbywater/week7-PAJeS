@@ -8,7 +8,7 @@ const credentials = require('hapi-context-credentials');
 const postData = require('./database/postdata.js');
 
 const server = new hapi.Server();
-let cache;
+// let cache;
 
 const port = process.env.PORT || 3005;
 
@@ -38,7 +38,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
           reply.view('Sorry, We are currently experiencing server difficulties');
           return;
         }
-        cache = res;
+        // cache = res;
         reply.view('index', { res });
       });
     },
@@ -59,7 +59,6 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
     handler: (req, reply) => {
 
       const { username, password } = req.payload;
-      req.cookieAuth.set({ username });
       data.getUsers(username, password, (err, res) => {
         if (err) {
           //TODO res: cache, can be passed in but makes the above function run since
@@ -72,7 +71,8 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
             if (dbError) {
               reply.view('Sorry, We are currently experiencing server difficulties');
             }
-            console.log('credentials', JSON.stringify(credentials));
+            req.cookieAuth.set({ username });
+            console.log('credentials', credentials);
             reply({ res: allTheBlogsPosts }).redirect('/');
 
           });
