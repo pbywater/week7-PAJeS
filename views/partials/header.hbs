@@ -1,5 +1,6 @@
 <header class="header">
-    <form class="header__form" action="/logged-in" method="post">
+  {{#unless credentials.username}}
+    <form class="header__form" action="/" method="post">
   <img class="header__logo" src="./assets/edit-tools.png" alt="pen and brush logo image">
       <label>Username:
       <input type="text" placeholder="Enter username" name="username" value="">
@@ -9,7 +10,17 @@
   </label>
   <input class="button" type="submit"  value="submit">
     </form>
+  {{/unless}}
     {{#if credentials.username}}
       <p> Hello {{credentials.username}} </p>
+      <form class="header__form" action="/logged-out" method="post">
+      <button type="submit" name="button">Log-Out</button>
+    </form>
+
     {{/if}}
+
+    {{#if credentials.fail}}
+      <p> {{credentials.fail}} </p>
+    {{/if}}
+
 </header>
