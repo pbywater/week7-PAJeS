@@ -1,5 +1,8 @@
 {{>header}}
 {{>articles}}
 {{#if message}}
-<article class="blogpost">{{message}}</article>
+  <form class="main" action="/" method="get">
+  <article class="blogpost">{{message}}</article>
+{{> button}}
+</form>
 {{/if}}

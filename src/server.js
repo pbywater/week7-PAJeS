@@ -65,8 +65,8 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
           //TODO res: cache, can be passed in but makes the above function run since
           //its our only means of validation
           reply.view('index', { message: err.message });
-      }
-      else if (res.length) {
+        }
+        else if (res.length) {
           data.getBlogPosts((dbError, allTheBlogsPosts) => {
 
             if (dbError) {
@@ -76,7 +76,6 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
             reply({ res: allTheBlogsPosts }).redirect('/');
 
           });
-        } else {
         }
       });
     },
