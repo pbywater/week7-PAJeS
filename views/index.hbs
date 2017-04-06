@@ -1,2 +1,6 @@
-{{>header}}
+{{#if authorized}}
+  {{>header_write_posts}}
+{{else}}
+  {{>header}}
+{{/if}}
 {{>articles}}

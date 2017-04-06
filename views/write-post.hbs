@@ -1,10 +1,9 @@
-{{>button}}
+{{>header_write_posts}}
 {{#if message}}
 <section class="error">{{message}}</section>
 {{/if}}
-<form class="write-post" action="/submit-post" method="post">
-  <input class="write-post__title" required type="text" placeholder="Titulo" name="title">
-  <textarea class="write-post__content" type="text" name="content" required  placeholder="Escribe tu entrada en el blog aqui"></textarea>
+<form class="write-post" action="" method="post">
+  <input class="write-post__title" type="text" placeholder="Titulo">
+  <textarea class="write-post__content" type="text" placeholder="Escribe tu entrada en el blog aqui"></textarea>
   <input class="button" type="submit"  value="enviar">
 </form>
-
