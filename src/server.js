@@ -67,11 +67,10 @@ server.register([inert, vision, CookieAuth], (err) => {
             if (err) reply.view('Sorry, We are currently experiencing server difficulties');
             response.res = res;
             response.credentials = req.auth.credentials;
-            console.log(response.credentials);
             reply.view('index', response);
           });
         } else {
-          // reply.view('invalid-login');
+          reply({ message: 'Please type in an accurate login'}).redirect('/');
         }
       });
     },
