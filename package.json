@@ -34,6 +34,7 @@
     "handlebars": "^4.0.6",
     "hapi": "^16.1.1",
     "hapi-auth-cookie": "^7.0.0",
+    "hapi-context-credentials": "^2.0.0",
     "inert": "^4.2.0",
     "pg": "^6.1.5",
     "vision": "^4.1.1"
