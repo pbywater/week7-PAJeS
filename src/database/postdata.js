@@ -2,6 +2,7 @@ const db_connection = require('../../database/db_connection.js');
 
 const postData = {};
 
+// TODO Change the last value from 4 to a variable that references username
 postData.insertIntoDatabase = (reqPayload, callback) => {
   const query = `INSERT INTO blogposts ( title,body,username)
     VALUES ('${reqPayload.title}','${reqPayload.content}',4)
