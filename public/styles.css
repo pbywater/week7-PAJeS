@@ -36,9 +36,29 @@ body {
     height: 5%;
     align-self: flex-start;
 }
+
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .blogpost {
-    width 60%;
-    margin: 1rem;
+    width: 50%;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    -webkit-box-shadow: 0 2px 2px grey;
+    box-shadow: 0 2px 2px grey;
+    /*background-color: rgba(129, 244, 225, 0.3);*/
+    /*border-radius: 1rem;*/
+}
+
+.blogpost__body{
+  padding: 1rem;
 }
 
 .write-post {
