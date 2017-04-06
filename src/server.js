@@ -2,7 +2,7 @@ const hapi = require('hapi');
 const vision = require('vision');
 const inert = require('inert');
 const handlebars = require('handlebars');
-
+const data= require('./database/getdata.js');
 const server = new hapi.Server();
 
 const port = +process.env.PORT || 3005;
@@ -27,6 +27,12 @@ server.register([inert, vision], (err) => {
     method: 'GET',
     path: '/',
     handler: (request, reply) => {
+      const blogPosts = {
+        title: data.getBlogPosts((err, res)=>{
+          if (err) console.log(err);
+          console.log(res[0].title);
+        }),
+      };
       reply.view('index');
     },
 
