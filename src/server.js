@@ -5,6 +5,7 @@ const handlebars = require('handlebars');
 const data = require('./database/getdata.js');
 const CookieAuth = require('hapi-auth-cookie');
 const credentials = require('hapi-context-credentials');
+const postData = require('./database/postdata.js');
 
 const server = new hapi.Server();
 
@@ -26,9 +27,7 @@ server.register([inert, vision, CookieAuth], (err) => {
     helpersPath: 'views/helpers',
   });
 
- // Template routes
-
-
+  // Template routes
   server.route({
     method: 'GET',
     path: '/',
@@ -44,10 +43,9 @@ server.register([inert, vision, CookieAuth], (err) => {
   server.route({
     method: 'GET',
     path: '/write-post',
-    handler: (request, reply) => {
-      reply.view('write-post');
+    handler: {
+      view: 'write-post',
     },
-
   });
 
   server.route({
@@ -73,6 +71,25 @@ server.register([inert, vision, CookieAuth], (err) => {
       });
     },
 
+  });
+
+  server.route({
+    method: 'POST',
+    path: '/submit-post',
+    handler: (request, reply) => {
+      postData.insertIntoDatabase(request.payload, (dbError, res) => {
+        if (dbError) {
+          // Figure out how to send message with redirect
+          // return reply({
+          //   message: 'Ayúdame, oh Dios mío, ¿por qué?'
+          // }).redirect('write-post');
+          return reply.view('write-post', {
+            message: 'Ayúdame, oh Dios mío, ¿por qué?',
+          });
+        }
+        reply(res).redirect('/');
+      });
+    },
   });
 
   // Static routes
