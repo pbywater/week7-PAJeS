@@ -84,6 +84,15 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
 
   server.route({
     method: 'POST',
+    path: '/logged-out',
+    handler: (request, reply) => {
+      request.cookieAuth.clear();
+      reply.redirect('/');
+    },
+  });
+  
+  server.route({
+    method: 'POST',
     path: '/submit-post',
     handler: (request, reply) => {
       postData.insertIntoDatabase(request.payload, (dbError, res) => {
