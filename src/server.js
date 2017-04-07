@@ -70,7 +70,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
           data.getBlogPosts((dbError, allTheBlogsPosts) => {
 
             if (dbError) {
-              reply.view('Lo sentimos, actualmente estamos experimentando dificultades con el servidor');
+              reply.view('index', { message: 'Lo sentimos, actualmente estamos experimentando dificultades con el servidor'});
             }
             req.cookieAuth.set({ username });
             reply({ res: allTheBlogsPosts }).redirect('/');
@@ -88,7 +88,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
     handler:(req, reply)=>{
       data.getBlogPostsByUser(req.auth.credentials.username, (dbErr, res) => {
         if (dbErr) {
-          reply.view('Sorry, We are currently experiencing server difficulties');
+          reply.view(index, { message: 'Lo sentimos, actualmente estamos experimentando dificultades con el servidor'});
           return;
         }
         reply.view('index', { res });
