@@ -25,7 +25,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
     layout: 'default',
     layoutPath: 'views/layout',
     partialsPath: 'views/partials',
-    helpersPath: 'views/helpers',
+    // helpersPath: 'views/helpers',
   });
 
   // Template routes
