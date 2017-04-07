@@ -53,8 +53,7 @@ body {
     border: none;
     -webkit-box-shadow: 0 2px 2px grey;
     box-shadow: 0 2px 2px grey;
-    /*background-color: rgba(129, 244, 225, 0.3);*/
-    /*border-radius: 1rem;*/
+    background-color: rgba(129, 244, 225, 0.3);
 }
 
 .blogpost__body{

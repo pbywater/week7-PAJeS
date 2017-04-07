@@ -25,7 +25,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
     layout: 'default',
     layoutPath: 'views/layout',
     partialsPath: 'views/partials',
-    helpersPath: 'views/helpers',
+    // helpersPath: 'views/helpers',
   });
 
   // Template routes
@@ -109,7 +109,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
     method: 'POST',
     path: '/submit-post',
     handler: (request, reply) => {
-      postData.insertIntoDatabase(request.payload, (dbError, res) => {
+      postData.insertIntoDatabase(request.payload, request.auth.credentials, (dbError, res) => {
         if (dbError) {
           //  TODO Figure out how to send message with redirect
           // return reply({
