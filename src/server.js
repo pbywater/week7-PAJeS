@@ -95,7 +95,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
       });
     },
   });
-  
+
   server.route({
     method: 'POST',
     path: '/logged-out',
@@ -104,12 +104,12 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
       reply.redirect('/');
     },
   });
-  
+
   server.route({
     method: 'POST',
     path: '/submit-post',
     handler: (request, reply) => {
-      postData.insertIntoDatabase(request.payload, (dbError, res) => {
+      postData.insertIntoDatabase(request.payload, request.auth.credentials, (dbError, res) => {
         if (dbError) {
           //  TODO Figure out how to send message with redirect
           // return reply({
