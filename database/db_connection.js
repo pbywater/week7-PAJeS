@@ -8,6 +8,8 @@ if (process.env.ENV==='test') {
   environment('config.env');
 }
 
+console.log(process.env.ENV);
+
 if (!process.env.DATABASE_URL) throw new Error('Environment variable DATABASE_URL must be set');
 
 const params = url.parse(process.env.DATABASE_URL);

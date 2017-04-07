@@ -154,3 +154,5 @@ server.start((err) => {
   if (err) throw err;
   console.log(`Server is running on ${server.info.uri}`);
 });
+
+module.exports=server;
