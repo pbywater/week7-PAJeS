@@ -60,6 +60,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
 
       const { username, password } = req.payload;
       data.getUsers(username, password, (err, res) => {
+
         if (err) {
           //TODO res: cache, can be passed in but makes the above function run since
           //its our only means of validation
