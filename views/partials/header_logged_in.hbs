@@ -1,10 +1,12 @@
 <header class="header">
-  <form class="header__form">
+  <form class="header__form" action="/logged-out" method="post">
     <img class="header__logo" src="./assets/edit-tools.png" alt="pen and brush logo image">
-      <a href="/write-post" class="">Write posts</a>
-      <a href="my-posts" class="">My posts</a>
+      <a href="/write-post" class="form__postLink">Write posts</a>
+      <a href="my-posts" class="form__postLink">My posts</a>
+      <p> Hello {{credentials.username}}! </p>
+      <button type="submit" name="button" class="button">Log-Out</button>
   </form>
   {{#if credentials.username}}
-    <p> Hello {{credentials.username}} </p>
+
   {{/if}}
 </header>
