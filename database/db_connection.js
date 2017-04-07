@@ -2,7 +2,7 @@ const { Pool } = require('pg');
 const url = require('url');
 const environment = require('env2');
 
-if (process.env.ENV==='test') {
+if (process.env.ENV === 'test') {
   environment('./config-test.env');
 } else {
   environment('config.env');

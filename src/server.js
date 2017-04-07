@@ -8,16 +8,15 @@ const credentials = require('hapi-context-credentials');
 const postData = require('./database/postdata.js');
 
 const server = new hapi.Server();
+// let cache;
 
-const port = +process.env.PORT || 3005;
-
-const response = {};
+const port = process.env.PORT || 3005;
 
 server.connection({
   port,
 });
 
-server.register([inert, vision, CookieAuth], (err) => {
+server.register([inert, credentials, vision, CookieAuth], (err) => {
   if (err) throw err;
 
   server.views({
@@ -36,11 +35,11 @@ server.register([inert, vision, CookieAuth], (err) => {
     handler: (request, reply) => {
       data.getBlogPosts((dbErr, res) => {
         if (dbErr) {
-          reply.view('Sorry, We are currently experiencing server difficulties');
+          reply.view('Lo sentimos, actualmente estamos experimentando dificultades con el servidor');
           return;
         }
-        response.res = res;
-        reply.view('index', response);
+        // cache = res;
+        reply.view('index', { res });
       });
     },
   });
@@ -58,19 +57,24 @@ server.register([inert, vision, CookieAuth], (err) => {
     method: 'POST',
     path: '/logged-in',
     handler: (req, reply) => {
+
       const { username, password } = req.payload;
-      req.cookieAuth.set({ username });
       data.getUsers(username, password, (err, res) => {
-        if (err) reply.view('Please enter valid logins');
-        if (res.length) {
-          data.getBlogPosts((err, res) => {
-            if (err) reply.view('Sorry, We are currently experiencing server difficulties');
-            response.res = res;
-            response.credentials = req.auth.credentials;
-            reply.view('index', response);
+        if (err) {
+          //TODO res: cache, can be passed in but makes the above function run since
+          //its our only means of validation
+          reply.view('index', { message: err.message });
+        }
+        else if (res.length) {
+          data.getBlogPosts((dbError, allTheBlogsPosts) => {
+
+            if (dbError) {
+              reply.view('Lo sentimos, actualmente estamos experimentando dificultades con el servidor');
+            }
+            req.cookieAuth.set({ username });
+            reply({ res: allTheBlogsPosts }).redirect('/');
+
           });
-        } else {
-          reply({ message: 'Please type in an accurate login'}).redirect('/');
         }
       });
     },
@@ -83,7 +87,7 @@ server.register([inert, vision, CookieAuth], (err) => {
     handler: (request, reply) => {
       postData.insertIntoDatabase(request.payload, (dbError, res) => {
         if (dbError) {
-          // Figure out how to send message with redirect
+          //  TODO Figure out how to send message with redirect
           // return reply({
           //   message: 'Ayúdame, oh Dios mío, ¿por qué?'
           // }).redirect('write-post');
@@ -95,6 +99,29 @@ server.register([inert, vision, CookieAuth], (err) => {
       });
     },
   });
+
+  server.route({
+    method: 'GET',
+    path:'/registration',
+    handler: (request, reply) => {
+        reply.view('registration');
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path:'/register',
+    handler: (request, reply) => {
+      data.registerUser(request, (dbErr, dbResponse) => {
+        if (dbErr) {
+          console.log('this is a db error');
+          reply.view('index', { message:'Sorry something went wrong'});
+        }
+        console.log('dbResponse', dbResponse);
+        reply.view('index', dbResponse);
+      })
+    }
+  })
 
   // Static routes
   server.route({
