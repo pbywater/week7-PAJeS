@@ -90,6 +90,17 @@ body {
     min-height: 70%;
 }
 
+.form__postLink {
+  background-color: #81F4E1;
+  border: 1px solid #81F4E1;
+  color: black;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 1rem;
+  margin: 0;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
 .button {
     background-color: #81F4E1;
     border: 0;
@@ -98,7 +109,15 @@ body {
     height: 2rem;
     -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: 0.5s ease;
 }
+
+.button:hover, .button:focus {
+  transform: scale(1.1);
+
+}
+
 
 .button__home {
     margin: 1rem;
