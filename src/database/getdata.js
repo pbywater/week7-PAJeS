@@ -10,8 +10,16 @@ dataFromDatabase.getBlogPosts = (cb) => {
 };
 
 dataFromDatabase.getUsers = (inputUsername, inputPassword, cb) => {
+  const unacceptableInput = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+  if (unacceptableInput.test(inputUsername)){
+    cb(Error('Please input a a valid username and password'));
+  }
   db_connection.query(`SELECT * FROM users WHERE username = '${inputUsername}' AND password = '${inputPassword}'`, (err, res) => {
-    if (err) cb(err);
+    if (err){
+      cb(err);
+    } else if (res.rows.length === 0) {
+     cb(Error('This user does not exist')) 
+    }
     cb(null, res.rows);
   });
 };

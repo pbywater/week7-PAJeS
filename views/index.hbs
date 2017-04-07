@@ -7,3 +7,9 @@
   {{/if}}
 {{/if}}
 {{>articles}}
+{{#if message}}
+  <form class="main" action="/" method="get">
+  <article class="blogpost">{{message}}</article>
+{{> button}}
+</form>
+{{/if}}
