@@ -9,9 +9,16 @@ dataFromDatabase.getBlogPosts = (cb) => {
   });
 };
 
+dataFromDatabase.getBlogPostsByUser = (loggedInUser, cb) => {
+  db_connection.query(`SELECT title, body, users.username FROM blogPosts INNER JOIN users ON users.id=blogPosts.username WHERE users.username='${loggedInUser}'`, (err, res) => {
+    if (err) cb(err);
+    cb(null, res.rows);
+  });
+};
+
 dataFromDatabase.getUsers = (inputUsername, inputPassword, cb) => {
   const unacceptableInput = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-  if (unacceptableInput.test(inputUsername) 
+  if (unacceptableInput.test(inputUsername)
     || unacceptableInput.test(inputPassword)){
     cb(Error('Introduzca un nombre de usuario y una contraseña válidos'));
   }
