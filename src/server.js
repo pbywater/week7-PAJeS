@@ -95,7 +95,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
       });
     },
   });
-  
+
   server.route({
     method: 'POST',
     path: '/logged-out',
@@ -104,7 +104,7 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
       reply.redirect('/');
     },
   });
-  
+
   server.route({
     method: 'POST',
     path: '/submit-post',
@@ -154,3 +154,5 @@ server.start((err) => {
   if (err) throw err;
   console.log(`Server is running on ${server.info.uri}`);
 });
+
+module.exports=server;
