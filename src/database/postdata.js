@@ -4,7 +4,6 @@ const postData = {};
 
 // TODO Change the last value from 4 to a variable that references username
 postData.insertIntoDatabase = (reqPayload, credentials, callback) => {
-  // const id = `SELECT users.id FROM users WHERE users.username = ${credentials.username};`
   db_connection.query(`SELECT users.id FROM users WHERE users.username = '${credentials.username}'`, (err, dbResponse) => {
     if (err) {
       return callback(err);
