@@ -83,6 +83,20 @@ server.register([inert, credentials, vision, CookieAuth], (err) => {
   });
 
   server.route({
+    method: 'GET',
+    path:'/my-posts',
+    handler:(req, reply)=>{
+      data.getBlogPostsByUser(req.auth.credentials.username, (dbErr, res) => {
+        if (dbErr) {
+          reply.view('Sorry, We are currently experiencing server difficulties');
+          return;
+        }
+        reply.view('index', { res });
+      });
+    },
+  });
+  
+  server.route({
     method: 'POST',
     path: '/submit-post',
     handler: (request, reply) => {
